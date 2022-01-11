@@ -21,34 +21,6 @@ Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 ####################
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=Yes
 
-# Disable "Meet now", the Search box, Cortana, and turn off "News and interests"
-####################
-# i.e. remove all junk from the Taskbar
-
-# [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
-# "HideSCAMeetNow"=dword:00000001
-# [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
-# "HideSCAMeetNow"=dword:00000001
-
-# News and interests: Long method, but comprehensive for silent configuration settings
-# https://silentinstallhq.com/disable-news-and-interests-from-windows-10-taskbar-for-all-users-powershell/
-
-# Disable Search box and Cortana on Start menu
-# https://admx.help/HKLM/SOFTWARE/Policies/Microsoft/Windows/Windows%20Search
-function Update-Registry ($RegPath, $Item, $Value) {
-    $Path = Split-Path $RegPath ; $Name = Split-Path $RegPath -Leaf
-    if (!(Test-Path -Path $RegPath)) { New-Item -Path $Path -Name $Name -Force }
-    if (!(Test-Path -Path "$RegPath\$Item")) { New-ItemProperty -Path $Path -Name $Item -Value $Value -Force }
-    Set-ItemProperty -Path $RegPath -Name $Item -Value $Value
-}
-Update-Registry "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" "AllowCortana" 0
-Update-Registry "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" "SearchboxTaskbarMode" 0
-
-Stop-Process -Name Explorer
-& Explorer.exe
-
-
-
 # Properly Enable PowerShell Remoting
 ####################
 # https://www.mobzystems.com/blog/configuring-powershell-remoting-with-network-access/
