@@ -1,10 +1,12 @@
 The Following one-liner will setup Chocolatey:
    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-   choco list --local-only    # List all installed packages    # choco list -lo
-   choco upgrade chocolatey   # Upgrade the Chocolatey package to the latest version
-   choco upgrade all --noop   # List all packages, versions, and available upgrades (note, this command replaces the older 'choco version all' command)
+   choco list --local-only    # List all installed packages                            # clist -lo
+   choco upgrade chocolatey   # Upgrade the Chocolatey package to the latest version   # up chocolatey -y
+   choco upgrade all --noop   # List all available upgrades (note, replaces older 'choco version all')   # cup all --noop
+   choco upgrade all -y       # Perform all upgrades   # cup all -y
 
-It is often useful to schedule a daily job to upgrade all packages 'choco upgrade all -y' daily during the night:
+It is often useful to schedule a daily job to upgrade all packages 'choco upgrade all -y' daily during the night: <put method here>
+
 Multiple installs can be shortened to a single line:
     cinst notepadplusplus sysinternals java firefox chrome -y
 
