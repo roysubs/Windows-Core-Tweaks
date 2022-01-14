@@ -35,10 +35,10 @@ cinst -y vscode visualstudiocode javaruntime jre8 autohotkey python3 notepadplus
 cinst -y anydesk teamviewer citrix-receiver hamachi zerotier-one filezilla filezilla.server skype
 cinst -y synergy ultramon displayfusion inputdirector sharemouse
 cinst -y mpc-hc-clsid2 bbc-iplayer handbrake ffmpeg virtualdub yacreader Paint.NET Gimp ImageMagick
-cinst -y gsudo nircmd kindlegen calibre regjump produkey performancetest hwinfo
+cinst -y bat less git hub gsudo checksum nircmd kindlegen calibre regjump produkey performancetest hwinfo
 cinst -y shutup10 recuva wox rainmeter    # Shutup (control Windows telemetry data passed to Microsoft), recuva (Hard disk recovery app), wox (very useful launcher app), rainmeter (customise desktop)  # https://www.slant.co/versus/5390/11687/~wox_vs_launchy
 cinst -y PowerToys vlc rufus   # Win10 PowerToys, VLC (I prefer MPC-HC), Rufus (create bootable USB stick)
-cinst -y git azure-cli azurepowershell nextcloud putty putty.portable
+cinst -y azure-cli azurepowershell nextcloud putty putty.portable
 cinst -y sql-server-express sql-server-management-studio
 cinst -y DotNet4.5.2 DotNet4.6.1 dotnet4.6.2 KB2919355 KB2919442 KB2999226 KB3033929 KB3035131 
 cinst -y vcredist140 vcredist2013 vcredist2015 visualstudio2017-installer visualstudio2017community
