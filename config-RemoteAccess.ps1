@@ -26,7 +26,36 @@ netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=
 # https://www.mobzystems.com/blog/configuring-powershell-remoting-with-network-access/
 # https://serverfault.com/questions/243493/powershell-remote-sessions-and-access-to-network-resources
 # https://devblogs.microsoft.com/powershell/credssp-for-second-hop-remoting/
+# PS C:\> $r = New-PSSession
+# PS C:\> icm $r {Get-PfxCertificate c:\monad\TestpfxFile.pfx}
+#    Enter password:
+#    Invoke-Command : The requested operation cannot be completed. The computer must be trusted for delegation and the current user account must be configured to allow delegation.
+#    At line:1 char:4
+#        + icm <<<<  $r {Get-PfxCertificate c:\monad\TestpfxFile.pfx}
+PowerShell remoting supports a new authentication mechanism called CredSSP.  “CredSSP enables an application to delegate the user’s credentials from the client (by using the client-side SSP) to the target server (through the server-side SSP).”   See the following link for more info: http://blogs.msdn.com/windowsvistasecurity/archive/2006/08/25/724271.aspx  Here is a link to the CredSSP protocol specification: http://download.microsoft.com/download/9/5/E/95EF66AF-9026-4BB0-A41D-A4F81802D92C/%5BMS-CSSP%5D.pdf
 
+To enable client-side SSP for winrm, run the following lines:
+Enable-WSManCredSSP -Role client -DelegateComputer *
+
+To enable server-side SSP for winrm:
+Enable-WSManCredSSP -Role server
+
+Now let’s try the same scenario with a remote runspace created with CredSSP authentication.
+
+PS C:\> $r = New-PSSession Fully.Qualified.Domain.Name -Auth CredSSP -cred domain\user
+PS C:\> icm $r {Get-PfxCertificate c:\monad\TestpfxFile.pfx} | fl
+Subject      : CN=Hula Monkey, OU=checkins, OU=monad
+Issuer       : CN=Hula Monkey, OU=checkins, OU=monad
+Thumbprint   : 613F82CEAF98C2457BD140AF3FBF7045FFFBAC90
+FriendlyName :
+NotBefore    : 7/7/2004 4:15:37 PM
+NotAfter     : 12/31/2039 3:59:59 PM
+Extensions   : {System.Security.Cryptography.Oid, System.Security.Cryptography.Oid}
+ComputerName : Fully.Qualified.Domain.Name
+PS C:\> icm $r {$s=new-pssession}
+PS C:\> icm $r {icm $s {whoami}}
+domain\user
+PS C:\>
 Enable-PSRemoting   # Can then use:   Enter-PSSession <host-name>
 # However, you will not be able to access any network resources on the host because of the double hop problem:
 # connecting PSDrives or running net use will ask for your credentials and fail.
