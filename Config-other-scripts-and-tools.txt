@@ -1,0 +1,7 @@
+
+"Windows Decrapifier" PowerShell script by "csand" on Spiceworks
+https://community.spiceworks.com/scripts/show/4378-windows-10-decrapifier-18xx-19xx-2xxx
+
+Windows KBhost snippets
+https://kbhost.nl/knowledgebase_category/windows/
+
