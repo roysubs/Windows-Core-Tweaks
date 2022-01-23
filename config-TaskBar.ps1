@@ -4,8 +4,9 @@
 # Turn off "News and interests", really annoying junk that is like a Start menu on the Left full of Weather and news junk. Useless.
 
 function Update-Registry ($RegPath, $Item, $Value) {
-    $Path = Split-Path $RegPath ; $Name = Split-Path $RegPath -Leaf
-    if (!(Test-Path -Path $RegPath)) { New-Item -Path $Path -Name $Name -Force }
+    $Path = Split-Path $RegPath
+    $KeyName = Split-Path $RegPath -Leaf
+    if (!(Test-Path -Path $RegPath)) { New-Item -Path $Path -Name $KeyName -Force }
     if (!(Test-Path -Path "$RegPath\$Item")) { New-ItemProperty -Path $Path -Name $Item -Value $Value -Force }
     Set-ItemProperty -Path $RegPath -Name $Item -Value $Value
 }
