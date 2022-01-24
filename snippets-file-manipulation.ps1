@@ -1,20 +1,20 @@
-# Snippets, do not run this script as is ...
+# This file is for useful code snippets. i.e. we never want this script to run like this,
+# so just put "exit" on the first line to quit if it is ever run accidentally:
 exit
 
-# Extract each zipfile to its own folder
-# capture the stuff you want here as array
-$zipfiles = ls C:\Downloads\*.zip
-$info = foreach ($zip in $zipfiles) { 
-    $zip.Name   # output whatever you want collected in $info, to show later if required
-    $dst = Join-Path -Path $zip.DirectoryName -ChildPath $zip.BaseName   # construct the folderpath for the unzipped files
+# Extract each zipfile to its own folder using Expand-Archive
+$zipfiles = ls C:\Downloads\*.zip       # Capture the zip files to extract as an array
+$info = foreach ($zip in $zipfiles) {   # $info will contain the output of the foreach loop as it extracts the zip files
+    $zip.Name                           # This is an output and will be collected into $info, to show later if required
+    $dst = Join-Path -Path $zip.DirectoryName -ChildPath $zip.BaseName   # Construct the folderpath for the unzipped files
     if (!(Test-Path $dst -PathType Container)) {
-        $null = New-Item -ItemType Directory $dst -ErrorAction SilentlyContinue
+        $null = New-Item -ItemType Directory $dst -ErrorAction SilentlyContinue   # Use "$null =" instead of "| $null" as the pipeline has overhead
         $null = Expand-Archive -LiteralPath $zip.FullName -DestinationPath $dst -ErrorAction SilentlyContinue
     }
 }
-# now you can create a multiline string from the $info array
-$result = $info -join "`r`n==========`r`n"
+$result = $info -join "`r`n==========`r`n"   # Can now create a multiline string from the $info array, and output $result if required
 
+# Basic Compress-Archive syntax
 Compress-Archive -Path D:\path\to\file.txt -DestinationPath D:\path\to\archive.zip
 
 
