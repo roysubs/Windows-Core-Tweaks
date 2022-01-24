@@ -24,9 +24,3 @@ $yesterday = '{0:yyyy-MM-dd}' -f (Get-Date).AddDays(-1)
 $out = Join-Path -Path ([System.IO.Path]::GetDirectoryName($filepath)) -ChildPath ("log_{0}.log" -f $yesterday)
 # use SimpleMatch because the pattern is to be taken literally (no regex)
 (Select-String -Path $filepath -Pattern $yesterday -SimpleMatch).Line | Set-Content -Path $out
-
-
-
-# Prevent the first run requirement for Internet Explorer for scripting
-# https://stackoverflow.com/questions/38005341/the-response-content-cannot-be-parsed-because-the-internet-explorer-engine-is-no
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Internet Explorer\Main" -Name "DisableFirstRunCustomize" -Value 2
