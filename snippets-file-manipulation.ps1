@@ -15,6 +15,8 @@ $info = foreach ($zip in $zipfiles) {
 # now you can create a multiline string from the $info array
 $result = $info -join "`r`n==========`r`n"
 
+Compress-Archive -Path D:\path\to\file.txt -DestinationPath D:\path\to\archive.zip
+
 
 
 # Get all lines from $filepath (possibly a log file) that matches a date string ($yesterday)
