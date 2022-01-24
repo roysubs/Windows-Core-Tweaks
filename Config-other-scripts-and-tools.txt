@@ -1,7 +1,68 @@
-
-"Windows Decrapifier" PowerShell script by "csand" on Spiceworks
-https://community.spiceworks.com/scripts/show/4378-windows-10-decrapifier-18xx-19xx-2xxx
-
 Windows KBhost snippets
 https://kbhost.nl/knowledgebase_category/windows/
+
+==========
+
+--------------------------------------------------------
+Windows 10 Decrapifier for 18XX/19XX/2XXX (by csand, on Spiceworks)
+--------------------------------------------------------
+https://community.spiceworks.com/scripts/show/4378-windows-10-decrapifier-18xx-19xx-2xxx
+(Make sure to at least read the below notes, and the switches below that)
+
+A cleanup script for Windows 10 18XX/19XX/2XXX aiming to get a decluttered default experience on regular Pro or Enterprise installs. Also sets most privacy settings to "opt-in" by default.
+
+Not recommended for 1709 and earlier - although it will work, some settings will not. Version 2 is still available and works great on those older Windows builds.
+
+Editable variables are near the top of the script. There are 2: one for the apps you want to keep, and custom XML for a start menu layout.
+
+If run with no switches, the script disables some unnecessary services and scheduled tasks. Removes all UWP apps except for some useful ones and ones you specify. Disables Cortana, OneDrive, restricts default privacy settings and cleans up the default start menu (not the start menu of the account it is run from though). Creates a transcript at SYSTEMDRIVE\WindowsDCtranscript.txt.
+
+Tested and works great in 1809 - 2004.
+
+Switches:
+-------------
+-allapps: Removes ALL apps including the store. Make sure this is what you want before you do it. It can be tough to get the store back.
+
+-leavetasks: Leaves scheduled tasks alone.
+
+-leaveservices: Leaves services alone.
+
+-appaccess: Leaves privacy/access options alone - depending on your usage, some issues can be prevented by leaving them with default (unrestricted) permissions. They are set to restricted by default in this script.
+
+-clearstart: Empties the start menu completely leaving you with just the apps list.
+
+-onedrive: Leaves all OneDrive content fully functional.
+
+-tablet: Use this for tablets or 2-in-1s to leave location and sensors enabled.
+
+-cortana: Leave Cortana and web enabled search on.
+
+-xbox: Leave xbox apps and related items.
+
+-nolog: Prevents transcript from being created at SYSTEMDRIVE\WindowsDCtranscript.txt.
+
+-appsonly: Only removes apps, doesn't touch privacy settings, services, and scheduled tasks. Cannot be used with -settingsonly switch. Can be used with all the others.
+
+-settingsonly: Only adjusts privacy settings, services, and scheduled tasks. Leaves apps. Cannot be used with -appsonly switch. Can be used with all others (-allapps won't do anything in that case).
+
+If you have any questions or problems to report please come to the user group! It is the best place to do so as I don't check the comments section here that often.
+
+Links:
+--------
+Decrapifier user group:
+https://community.spiceworks.com/user-groups/windows-decrapifier-group
+
+Single machine how-to:
+https://community.spiceworks.com/how_to/148624-how-to-clean-up-a-single-windows-10-machine-image-using-decrapifier
+
+Common questions/issues:
+https://community.spiceworks.com/topic/2149611-common-questions-and-problems?page=1#entry-7850320
+
+Old Links:
+--------------
+MDT how-to (old, no longer supporting this although it will work):
+https://community.spiceworks.com/how_to/150455-shoehorn-decrapifier-into-your-mdt-task
+
+Previous version of Decrapifier (for 1709 and earlier, also no longer supporting):
+https://community.spiceworks.com/scripts/show/3977-windows-10-decrapifier-version-2
 
