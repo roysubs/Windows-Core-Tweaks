@@ -1,5 +1,5 @@
 # This file is for useful code snippets. i.e. we never want this script to run like this,
-# so just put "exit" on the first line to quit if it is ever run accidentally:
+# so just put "exit" as the first line of code to quit if it is ever run accidentally:
 exit
 
 # Extract each zipfile to its own folder using Expand-Archive
