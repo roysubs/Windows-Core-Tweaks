@@ -1,0 +1,32 @@
+####################
+# Notes to consider before Reset
+####################
+# Backup main user folder with robocopy (this will include the Downloads and Desktop folders)
+#   robocopy C:\Users\Boss D:\Backups\Users-$($env:Username)-$(Get-Date -format "yyyy-MM-dd__HH-mm") /mir /r:1 /w:1 /xj
+#      # /XJ :: eXclude symbolic links (for both files and directories) and Junction points. 
+#      # /XJD :: eXclude symbolic links for Directories and Junction points. 
+#      # /XJF :: eXclude symbolic links for Files.
+#   Use /XJ to avoid things like:
+#      New Dir          1    C:\Users\Boss\AppData\Local\Application Data\Application Data\Application Data\Application Data\
+#      Application Data\Application Data\Application Data\Application Data\Application Data\Application Data\Application Data\
+#      Application Data\Application Data\Application Data\Application Data\Application Data\Application Data\Application Data\
+#      Application Data\Application Data\Application Data\Application Data\Application Data\Application Data\Application Data\
+#      Application Data\Application Data\Application Data\Application Data\Application Data\Application Data\Microsoft\Edge\
+#      User Data\Default\Service Worker\CacheStorage\d59369410fe7be69d7f5c40d1e2dce72a5121a6d\fff7c74f-7efc-4506-aaf6-11759ae001d7\
+#      index-dir\
+# Backup WhatsApp message store: no need on PC, the message store is on the phone, and WebWhatsApp will reflect that, it is the phone store that is important
+# Backup Signal: currently no way to do this: https://support.signal.org/hc/en-us/articles/360007059752-Backup-and-Restore-Messages#desktop_restore
+# Backup 
+# Backup VMs / WSL: definitely do this if have any on system, make sure they are on the D: drive
+#   Get-VMSwitch  * | Format-Table Name
+#   New-VM -Name Win10VM -MemoryStartupBytes 4GB -BootDevice VHD -VHDPath .\VMs\Win10.vhdx -Path .\VMData -Generation 2 -Switch ExternalSwitch
+# Sandbox?
+
+####################
+# Fixes:
+####################
+# YouTube: Can't click a video to start/pause it anymore?
+# Since yesterday, I have to use the manual play bar to be able to pause/start a video.
+# Clicking on it as before doesn't work anymore. Is this a widespread issue or just me? Chrome, Win10
+# Found the problem! chrome://flags/#enable-experimental-web-platform-features # You gotta disable Experimental web platform features!
+
