@@ -49,6 +49,7 @@ choco install vscode.install autohotkey.install javaruntime
 choco install mpc-hc ditto sumatrapdf
 # Can now turn off all annoying autoupdates for MPC-HC / Java / VS Code / Macrium Reflect, as updates can be delivered by Chocolatey
 # MPC-HC, at startup, it asks if you want updates, select no, then just control them via Chocolatey
+# 
 # Java, how to turn off updates, can Chocolatey handle this ok?
 # VS Code, how to turn off updates, can Chocolatey handle this ok?
 # Macrium Reflect, go to Help > Configure Update Check... > Turn off both update notification options, Chocolately will update as required
