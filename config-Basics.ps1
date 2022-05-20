@@ -48,7 +48,7 @@ foreach ($c in $toChange) { Set-ItemProperty -Path "HKCU:\AppEvents\Schemes\Apps
 choco install vscode.install autohotkey.install javaruntime   
 choco install mpc-hc ditto sumatrapdf
 # Can now turn off all annoying autoupdates for MPC-HC / Java / VS Code / Macrium Reflect, as updates can be delivered by Chocolatey
-# MPC-HC, at startup, it asks if you want updates, select no, then just control them via Chocolatey
+# MPC-HC, offers to turn off updates at first start, select no, then just control all updates via Chocolatey
 # 
 # Java, how to turn off updates, can Chocolatey handle this ok?
 # VS Code, how to turn off updates, can Chocolatey handle this ok?
