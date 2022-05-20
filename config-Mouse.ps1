@@ -1,3 +1,10 @@
+####################
+#
+# Automate large mouse pointers
+# Mostly for running Windows on TVs, and sometimes for laptops
+#
+####################
+
 # Change to large (64-point) Windows Mouse and Cursor with PowerShell
 $RegConnect             = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey([Microsoft.Win32.RegistryHive]"CurrentUser", "$env:COMPUTERNAME")
 $RegCursorsAccess       = $RegConnect.OpenSubKey("Software\Microsoft\Accessibility", $true)

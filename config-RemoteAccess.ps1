@@ -1,11 +1,18 @@
-# Correctly enable ways to remotely access this system.
 ####################
-# This is because it is impossible to remotely configure a Windows client to allow remote access (either via
+#
+# Correct ways to enable remote access this system.
+#
+# Need to enable Remote Destkop, most important as can always do other things once this is in place
+# PowerShell Remoting is also very important to be able to access other systems via PowerShell (not working yet)
+#
+# Important as it is impossible to remotely configure a Windows client to allow remote access (either via
 # Remote Desktop, or networking, or PS Remoting) since all access methods require some change to the remote
 # system by a local user.
-
+#
 # Also note to dismiss the "Sign in with Microsoft account" false Security warning from Windows Defender ...
 # This is Microsoft pushing people to use Microsoft accounts, just press dismiss for this and use local accounts.
+#
+####################
 
 
 
@@ -21,6 +28,8 @@ Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 ####################
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=Yes
 
+
+
 # Properly Enable PowerShell Remoting
 ####################
 # https://www.mobzystems.com/blog/configuring-powershell-remoting-with-network-access/
@@ -32,37 +41,38 @@ netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=
 #    Invoke-Command : The requested operation cannot be completed. The computer must be trusted for delegation and the current user account must be configured to allow delegation.
 #    At line:1 char:4
 #        + icm <<<<  $r {Get-PfxCertificate c:\monad\TestpfxFile.pfx}
-PowerShell remoting supports a new authentication mechanism called CredSSP.  “CredSSP enables an application to delegate the user’s credentials from the client (by using the client-side SSP) to the target server (through the server-side SSP).”   See the following link for more info: http://blogs.msdn.com/windowsvistasecurity/archive/2006/08/25/724271.aspx  Here is a link to the CredSSP protocol specification: http://download.microsoft.com/download/9/5/E/95EF66AF-9026-4BB0-A41D-A4F81802D92C/%5BMS-CSSP%5D.pdf
 
-To enable client-side SSP for winrm, run the following lines:
-Enable-WSManCredSSP -Role client -DelegateComputer *
-
-To enable server-side SSP for winrm:
-Enable-WSManCredSSP -Role server
-
-Now let’s try the same scenario with a remote runspace created with CredSSP authentication.
-
-PS C:\> $r = New-PSSession Fully.Qualified.Domain.Name -Auth CredSSP -cred domain\user
-PS C:\> icm $r {Get-PfxCertificate c:\monad\TestpfxFile.pfx} | fl
-Subject      : CN=Hula Monkey, OU=checkins, OU=monad
-Issuer       : CN=Hula Monkey, OU=checkins, OU=monad
-Thumbprint   : 613F82CEAF98C2457BD140AF3FBF7045FFFBAC90
-FriendlyName :
-NotBefore    : 7/7/2004 4:15:37 PM
-NotAfter     : 12/31/2039 3:59:59 PM
-Extensions   : {System.Security.Cryptography.Oid, System.Security.Cryptography.Oid}
-ComputerName : Fully.Qualified.Domain.Name
-PS C:\> icm $r {$s=new-pssession}
-PS C:\> icm $r {icm $s {whoami}}
-domain\user
-PS C:\>
-Enable-PSRemoting   # Can then use:   Enter-PSSession <host-name>
+# PowerShell remoting supports a new authentication mechanism called CredSSP.  “CredSSP enables an application to delegate the user’s credentials from the client (by using the client-side SSP) to the target server (through the server-side SSP).”   See the following link for more info: http://blogs.msdn.com/windowsvistasecurity/archive/2006/08/25/724271.aspx  Here is a link to the CredSSP protocol specification: http://download.microsoft.com/download/9/5/E/95EF66AF-9026-4BB0-A41D-A4F81802D92C/%5BMS-CSSP%5D.pdf
+# 
+# To enable client-side SSP for winrm, run the following lines:
+# Enable-WSManCredSSP -Role client -DelegateComputer *
+# 
+# To enable server-side SSP for winrm:
+# Enable-WSManCredSSP -Role server
+# 
+# Now let's try the same scenario with a remote runspace created with CredSSP authentication.
+# 
+# PS C:\> $r = New-PSSession Fully.Qualified.Domain.Name -Auth CredSSP -cred domain\user
+# PS C:\> icm $r {Get-PfxCertificate c:\monad\TestpfxFile.pfx} | fl
+# Subject      : CN=Hula Monkey, OU=checkins, OU=monad
+# Issuer       : CN=Hula Monkey, OU=checkins, OU=monad
+# Thumbprint   : 613F82CEAF98C2457BD140AF3FBF7045FFFBAC90
+# FriendlyName :
+# NotBefore    : 7/7/2004 4:15:37 PM
+# NotAfter     : 12/31/2039 3:59:59 PM
+# Extensions   : {System.Security.Cryptography.Oid, System.Security.Cryptography.Oid}
+# ComputerName : Fully.Qualified.Domain.Name
+# PS C:\> icm $r {$s=new-pssession}
+# PS C:\> icm $r {icm $s {whoami}}
+# domain\user
+# PS C:\>
+# Enable-PSRemoting   # Can then use:   Enter-PSSession <host-name>
 # However, you will not be able to access any network resources on the host because of the double hop problem:
 # connecting PSDrives or running net use will ask for your credentials and fail.
 # To remedy that, we have to allow the host to respond to CredSSP-type connections and to configure the client
 # to delegate credentials to the host.
 # Allow the host to respond incoming CredSSP connections, as Administrator, run:
-Enable-WSManCredSSP Server   # Enables CredSSP authentication mechanism for incoming sessions on the host
+# Enable-WSManCredSSP Server   # Enables CredSSP authentication mechanism for incoming sessions on the host
 
 ### Configuring the client
 # Next, the client (the computer the remote session connects from) has to be configured to trust one of more
