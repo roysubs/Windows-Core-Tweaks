@@ -28,7 +28,7 @@ $backup   = "C:\Users\$env:USERNAME\Documents\Backup\Folder View Defaults"
 # Paths for Powershell commands use the registry Get-PSDrives, hence the ':'
 $src = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes'
 $dst = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes'
-$TVs = "$dest\*\TopViews\*"
+$TVs = "$dst\*\TopViews\*"
 
 # Paths for reg.exe commands do not use a ':'
 $bagMRU   = 'HKCR\Local Settings\Software\Microsoft\Windows\Shell\BagMRU'
@@ -42,7 +42,7 @@ reg export $Defaults "$Backup\defaults.reg"
 reg delete $bagMRU /f
 reg delete $bags /f
 reg delete $defaults /f
-reg delete ($dest.Replace(':','')) /f
+reg delete ($dst.Replace(':','')) /f
 #------------------* The Magic is here *--------------------------
 # First, copy   HKLM\...\FolderTypes   to   HKCU\...\FolderTypes
 Copy-Item $src "$(Split-Path $dst)" -Recurse
